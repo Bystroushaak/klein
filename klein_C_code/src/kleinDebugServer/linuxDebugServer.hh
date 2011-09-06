@@ -1,6 +1,8 @@
 // This file is only for Linux (the Mercury board)
 // $Revision: 1.1 $
 
+# ifndef LINUX_DEBUG_SERVER_HH
+# define LINUX_DEBUG_SERVER_HH
 
 # include <inttypes.h>
 # include <stdio.h>
@@ -614,3 +616,5 @@ class LinuxRequestServer: public SocketUser {
       return r;
     }
 };
+
+# endif // LINUX_DEBUG_SERVER_HH
