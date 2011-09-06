@@ -1,6 +1,7 @@
  '$Revision: 30.9 $'
  '
-Copyright 2006 Sun Microsystems, Inc. All rights reserved. Use is subject to license terms.
+Copyright 1992-2009 AUTHORS, Sun Microsystems, Inc. and Stanford University.
+See the LICENSE file for license information.
 '
 
 
@@ -65,6 +66,7 @@ SlotsToOmit: directory fileInTimeString myComment postFileIn revision subpartNam
 asmPPC
 asmSPARC
 asmI386
+asmLLVM
 '.
         } | ) 
 
@@ -76,6 +78,7 @@ asmI386
  bootstrap read: 'asmPPC' From: 'applications/asmKit/asmPPC'
  bootstrap read: 'asmSPARC' From: 'applications/asmKit/asmSPARC'
  bootstrap read: 'asmI386' From: 'applications/asmKit/asmI386'
+ bootstrap read: 'asmLLVM' From: 'applications/asmKit/asmLLVM'
 
 
 
