@@ -7,6 +7,34 @@ See the LICENSE file for license information.
 
  '-- Module body'
 
+ bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'assemblerSystems' -> () From: ( | {
+         'ModuleInfo: Module: asmLLVM InitialContents: FollowSlot'
+        
+         llvm = bootstrap setObjectAnnotationOf: bootstrap stub -> 'globals' -> 'assemblerSystems' -> 'llvm' -> () From: ( |
+             {} = 'ModuleInfo: Creator: globals assemblerSystems llvm.
+'.
+            | ) .
+        } | ) 
+
+ bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'assemblerSystems' -> 'llvm' -> () From: ( | {
+         'Comment: The assembler that will respond to all the opcode of the assembly language
+It is accessed with the \"a\" shortcut in \"klein assemblerProgramBuilder parent\"\x7fModuleInfo: Module: asmLLVM InitialContents: FollowSlot'
+        
+         assembler = bootstrap setObjectAnnotationOf: bootstrap stub -> 'globals' -> 'assemblerSystems' -> 'llvm' -> 'assembler' -> () From: ( |
+             {} = 'ModuleInfo: Creator: globals assemblerSystems llvm assembler.
+'.
+            | ) .
+        } | ) 
+
+ bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'assemblerSystems' -> 'llvm' -> 'assembler' -> () From: ( | {
+         'ModuleInfo: Module: asmLLVM InitialContents: FollowSlot'
+        
+         parent* = bootstrap setObjectAnnotationOf: bootstrap stub -> 'globals' -> 'assemblerSystems' -> 'llvm' -> 'assembler' -> 'parent' -> () From: ( |
+             {} = 'ModuleInfo: Creator: globals assemblerSystems llvm assembler parent.
+'.
+            | ) .
+        } | ) 
+
  bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'assemblerSystems' -> 'llvm' -> () From: ( | {
          'ModuleInfo: Module: asmLLVM InitialContents: FollowSlot'
         

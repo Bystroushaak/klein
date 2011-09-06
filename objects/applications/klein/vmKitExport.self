@@ -1,6 +1,7 @@
  '$Revision: 30.4 $'
  '
-Copyright 2006 Sun Microsystems, Inc. All rights reserved. Use is subject to license terms.
+Copyright 1992-2009 AUTHORS, Sun Microsystems, Inc. and Stanford University.
+See the LICENSE file for license information.
 '
 
 
@@ -25,6 +26,15 @@ See klein foreignProgramMorph parent platformNames. -- jb 5/03\x7fModuleInfo: Cr
         
          i386 = bootstrap setObjectAnnotationOf: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'i386' -> () From: ( |
              {} = 'ModuleInfo: Creator: globals kleinAndYoda exportPlatforms i386.
+'.
+            | ) .
+        } | ) 
+
+ bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> () From: ( | {
+         'ModuleInfo: Module: vmKitExport InitialContents: FollowSlot'
+        
+         llvm = bootstrap setObjectAnnotationOf: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'llvm' -> () From: ( |
+             {} = 'ModuleInfo: Creator: globals kleinAndYoda exportPlatforms llvm.
 '.
             | ) .
         } | ) 

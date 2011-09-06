@@ -1,6 +1,7 @@
  '$Revision: 30.21 $'
  '
-Copyright 2006 Sun Microsystems, Inc. All rights reserved. Use is subject to license terms.
+Copyright 1992-2009 AUTHORS, Sun Microsystems, Inc. and Stanford University.
+See the LICENSE file for license information.
 '
 
 
@@ -197,6 +198,30 @@ SlotsToOmit: parent.
         
          rebuildProgramBeforeLaunchingPrompt = ( |
             | 'Reassemble program before launching?').
+        } | ) 
+
+ bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'llvm' -> () From: ( | {
+         'ModuleInfo: Module: kleinAsmPgmExporter InitialContents: FollowSlot'
+        
+         assemblerProgramExporter = bootstrap setObjectAnnotationOf: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'llvm' -> 'assemblerProgramExporter' -> () From: ( |
+             {} = 'ModuleInfo: Creator: globals kleinAndYoda exportPlatforms llvm assemblerProgramExporter.
+'.
+            | ) .
+        } | ) 
+
+ bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'llvm' -> 'assemblerProgramExporter' -> () From: ( | {
+         'ModuleInfo: Module: kleinAsmPgmExporter InitialContents: FollowSlot'
+        
+         parent* = bootstrap setObjectAnnotationOf: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'llvm' -> 'assemblerProgramExporter' -> 'parent' -> () From: ( |
+             {} = 'ModuleInfo: Creator: globals kleinAndYoda exportPlatforms llvm assemblerProgramExporter parent.
+'.
+            | ) .
+        } | ) 
+
+ bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'llvm' -> 'assemblerProgramExporter' -> 'parent' -> () From: ( | {
+         'ModuleInfo: Module: kleinAsmPgmExporter InitialContents: FollowSlot'
+        
+         parent* = bootstrap stub -> 'globals' -> 'klein' -> 'assemblerProgramBuilder' -> 'parent' -> ().
         } | ) 
 
  bootstrap addSlotsTo: bootstrap stub -> 'globals' -> 'kleinAndYoda' -> 'exportPlatforms' -> 'ppc' -> () From: ( | {
