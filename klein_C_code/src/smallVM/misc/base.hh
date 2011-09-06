@@ -1,7 +1,9 @@
 # ifndef KLEIN_BASE_H
 # define KLEIN_BASE_H
 
+# ifndef NULL
 # define NULL 0
+# endif
 
 typedef int intNN;
 typedef intNN Oop;

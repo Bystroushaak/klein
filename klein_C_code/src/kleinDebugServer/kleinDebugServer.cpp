@@ -17,7 +17,7 @@ Transmission format: proprietary
 
 # if defined(__APPLE__)
   # include "machDebugServer.hh"
-# elif define(__linux__)
+# elif defined(__linux__)
   # include "linuxDebugServer.hh"
 # endif
 

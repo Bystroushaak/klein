@@ -60,4 +60,4 @@ class Object_Table {
 };
 
 
-# endif OBJECT_TABLE_HH
+# endif // OBJECT_TABLE_HH

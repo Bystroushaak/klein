@@ -154,7 +154,9 @@ class ProcessStatus {
       // there might be conversion errors.  Right now we really don't care.
       // go ahead and clobber errno and everything will be happy. -- Michael Furman 8/05
       errno=0;
-      delete tbuf;`:w
+      // delete tbuf;`:w
+      // is that vim?
+      delete tbuf;
     }
 
 
