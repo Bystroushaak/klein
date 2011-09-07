@@ -15,7 +15,9 @@ Transmission format: proprietary
 
 # include "kleinDebugServer.hh"
 
-# if defined(__APPLE__)
+# if defined(LLVM)
+  # include "llvmDebugServer.hh"
+# elif defined(__APPLE__)
   # include "machDebugServer.hh"
 # elif defined(__linux__)
   # include "linuxDebugServer.hh"
@@ -210,7 +212,7 @@ public:
     close(serverSocketFd);
     if (verbose  ||  print_children)
       printf_and_flush("child returning %d\n", clientSocketFd);
-    setpgrp(0, getpid());
+    setpgid(0, getpid());
     return clientSocketFd;
  }
           
@@ -381,8 +383,10 @@ public:
         case request_getReturnHandler:              { ReturnHandlerGetter    x(s);  x.do_it(); }  r = true;  break;
         case request_getBaseAndLength:              { BaseAndLengthGetter    x(s);  x.do_it(); }  r = true;  break;
         
+        #ifndef LLVM
         case request_mach:                          { MachRequestServer      x(s);  r = x.do_it(); break; }
         case request_linux:		            { LinuxRequestServer     x(s);  r = x.do_it(); break; }
+        #endif
         case request_smallSelf:		            { SmallSelfRequestServer x(s);  r = x.do_it(); break; }
 
         

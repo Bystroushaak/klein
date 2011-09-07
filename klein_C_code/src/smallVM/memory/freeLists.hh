@@ -39,7 +39,7 @@ class FreeOopsLists {
   
   static bool has_a_fair_amount_of_free_space_left(ObjVectorObj* freeOopsLists);
 
-  static void FreeOopsLists::print_freeOops_left(ObjVectorObj* freeOopsLists);
+  static void print_freeOops_left(ObjVectorObj* freeOopsLists);
 };
 
 
