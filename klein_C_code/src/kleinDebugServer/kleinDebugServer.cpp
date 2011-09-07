@@ -256,6 +256,9 @@ class ServerInitiator: public SocketUser {
   char   error_or_null[1000];
 
   void set_arch() {
+    #ifdef LLVM
+    arch = "llvm";
+    #else
     static struct utsname my_utsname;
     if ( uname(&my_utsname) ) {
       perror("set_arch: uname");
@@ -265,6 +268,7 @@ class ServerInitiator: public SocketUser {
     if (0 == strcmp( arch, "Power Macintosh") )
       arch = "ppc";
     if (verbose) printf_and_flush("set_arch() setting arch to: %s\n", arch);
+    #endif
   }
 
   char* read_request(int& len) { return s.read_bytes(len, "receiving initiation request"); }    
