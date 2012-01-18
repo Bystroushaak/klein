@@ -2,7 +2,7 @@
 # include "stringObj.hh"
 
 
-SlotDesc*   MapObj::find_slot_with_C_name(char* n) {
+SlotDesc*   MapObj::find_slot_with_C_name(const char* n) {
   FOR_EACH_SLOT_DESC(this, sd)
     if (sd->name_addr()->is_equal_to_C_string(n))
       return sd;
@@ -53,7 +53,7 @@ void printMark(oop_t oop) {
 void printObjectId( oop_t oop ) {
   assert(is_mem(oop));
   //printf("<id: %ld oop: (0x%lx)>", Object_Table::index_for_oop(oop), oop);
-  printf("%ld",Object_Table::index_for_oop(oop));
+  printf("%ld", (long)Object_Table::index_for_oop(oop));
 }
 
 void MapObj::print( oop_t oopForObj ) {
@@ -82,7 +82,7 @@ void MapObj::print( oop_t oopForObj ) {
       if (!slot->is_assignment()) { //don't print assignment slot names
         slot->printAugmentedName();
         if (slot->is_argument()) 
-          printf(" = <arg %ld>", slot->contents(oopForObj));
+          printf(" = <arg %ld>", (long)slot->contents(oopForObj));
         else if (slot->is_map()) {
           printf(" = ");
           print_oop(slot->contents(oopForObj));
@@ -92,7 +92,7 @@ void MapObj::print( oop_t oopForObj ) {
           assert(slot->is_object());
           if (printingAMap) {
             // just printing a map; there isn't an object to print
-            printf(" = <offset %ld>", slot->value());
+            printf(" = <offset %ld>", (long)slot->value());
           } else {
             // printing a real object; fetch its slot
             printf(" <- ");

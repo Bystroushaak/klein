@@ -3,11 +3,11 @@
 
 // $Revision: 1.7 $
 
-void fatal_handler(char* file, int line, char* msg);     
-void untested_handler(char* file, int line, char* msg); 
-void unimplemented_handler(char* file, int line, char* msg); 
+void fatal_handler(const char* file , int line, const char* msg );     
+void untested_handler(const char* file , int line, const char* msg ); 
+void unimplemented_handler(const char* file , int line, const char* msg ); 
 
-# define fatal(msg)  fatal_handler(__FILE__, __LINE__, msg)
+# define fatal(msg)  fatal_handler(__FILE__, __LINE__, #msg)
 
 # define untested(foo) \
     untested_handler(__FILE__, __LINE__, #foo )
@@ -23,8 +23,8 @@ void unimplemented_handler(char* file, int line, char* msg);
 
 inline int assert_bounds(int i, int size) { assert( 0 <= i  &&  i < size ); return i; }
 
-void error_printf_and_flush(char*, ...);
-void       printf_and_flush(char*, ...);
+void error_printf_and_flush(const char* , ...);
+void       printf_and_flush(const char* , ...);
 
                  
  

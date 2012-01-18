@@ -20,12 +20,12 @@ void ByteVectorObj::range_set(smi from, smi length, char* new_values) {
 
 
 
-bool ByteVectorObj::is_equal_to_C_string(char* cString) {
+bool ByteVectorObj::is_equal_to_C_string(const char* cString) {
   // There's no '\0' at the end of the Self string, so be careful.
   smi   n = indexableSize();
   char* p = bytes();
   
-  char* cp = cString;
+  const char* cp = cString;
   
   for (  ;  n--;  ++p, ++cp ) {
     char c = *cp;
@@ -36,14 +36,14 @@ bool ByteVectorObj::is_equal_to_C_string(char* cString) {
 }
 
 
-bool ByteVectorObj::is_equal_to_bytes_at(char* other_bytes, fint other_bytes_size) {
+bool ByteVectorObj::is_equal_to_bytes_at(const char* other_bytes, fint other_bytes_size) {
   smi   n = indexableSize();
   if (n != other_bytes_size)
     return false;
   
-  char* p = bytes();
+  const char* p = bytes();
   
-  char* cp = other_bytes;
+  const char* cp = other_bytes;
   
   while (n--)
     if ( *p++ != *cp++ )
@@ -54,7 +54,7 @@ bool ByteVectorObj::is_equal_to_bytes_at(char* other_bytes, fint other_bytes_siz
 
 
 //aaa todo check if can factor this and is_equal_to_C_string
-bool ByteVectorObj::ends_with_C_string(char* cString, int size) {
+bool ByteVectorObj::ends_with_C_string(const char* cString, int size) {
   // passing in a size is just an optimization
   // size should not include null character
   if (size == -1)            size  = length_of_C_string(cString);
@@ -62,9 +62,9 @@ bool ByteVectorObj::ends_with_C_string(char* cString, int size) {
     
   if (size > indexableSize())  return false; //optimization
   
-  for (char *sp = bytes() + indexableSize(),
-            *cp = cString +          size;
-         cString <= cp; )  {
+  for (const char *sp = bytes() + indexableSize(),
+                  *cp = cString +          size;
+             cString <= cp; )  {
     if ( *cp-- != *sp-- )
       return false;
   }
@@ -104,7 +104,7 @@ void ByteVectorObj::copy_bytes_to(char* new_bytes, smi new_indexable_size, char 
 }
 
 
-oop_t ByteVectorObj::clone_for_C_string(char* cString, ByteVectorObj** addrp, fint length) {
+oop_t ByteVectorObj::clone_for_C_string(const char* cString, ByteVectorObj** addrp, fint length) {
   fint n = (length == -1) ? length_of_C_string(cString)
                           : length;
   
@@ -112,7 +112,8 @@ oop_t ByteVectorObj::clone_for_C_string(char* cString, ByteVectorObj** addrp, fi
   oop_t new_bv = clone_and_resize(n, 0, &addr, false);
   if (addrp) *addrp = addr;
   
-  char *srcp = cString, *dstp = addr->bytes(), *endp = cString + n;
+  const char *srcp = cString, *endp = cString + n;
+  char *dstp = addr->bytes();
   while (srcp != endp)
     *dstp++ = *srcp++;
   

@@ -10,7 +10,7 @@ typedef   oop_t (*prim_fn_t)(oop_t rcvr, oop_t* argsp, oop_t current_activation,
 class PrimitiveTableEntry {
 
  public:
-  char* cName_sans_IfFail;
+  const char* cName_sans_IfFail;
   prim_fn_t fn;
 
   // computed at initialize time  

@@ -24,14 +24,14 @@ class ByteVectorObj : public AbstractVectorObj {
   
   char* bytes()  { return (char*) oop_addr(indexableOrigin()); }
 
-  bool is_equal_to_bytes_at(char* other_bytes, int other_bytes_size);
+  bool is_equal_to_bytes_at(const char* other_bytes, int other_bytes_size);
 
-  bool is_equal_to_C_string(char*);
-  bool   ends_with_C_string(char* cString, int size = -1);
+  bool is_equal_to_C_string(const char*);
+  bool   ends_with_C_string(const char* cString, int size = -1);
 
   void   copy_bytes_to(     char* new_bytes, smi new_indexable_size, char fill = 0,                               bool shouldFill = true);
   oop_t  clone_and_resize(                   smi new_indexable_size, char fill = 0, ByteVectorObj** addrp = NULL, bool shouldFill = true);
-  oop_t  clone_for_C_string(                 char* cString,                         ByteVectorObj** addrp = NULL,                          fint length = -1);
+  oop_t  clone_for_C_string(                 const char* cString,                   ByteVectorObj** addrp = NULL,                          fint length = -1);
   oop_t  clone_for_int32(   int32 i,                                                ByteVectorObj** addrp = NULL                                           );
 
   void range_set (smi from, smi length, char* new_values);

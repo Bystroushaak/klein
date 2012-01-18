@@ -13,8 +13,11 @@
 # include <mach/thread_act.h> // jaguar
 # include <mach/mach_traps.h>
 # include <mach/mach_error.h>
-# include <mach/ppc/thread_status.h>
-
+# ifdef __ppc__
+#     include <mach/ppc/thread_status.h>
+# else
+#     include <mach/i386/thread_status.h>
+# endif
 
 typedef int nAddressBytes_t;
 
@@ -139,9 +142,9 @@ class MemoryManipulator {
     if (nregs == 0)
       return 0;
     # ifdef __ppc__
-      return ((struct ppc_thread_state*)regs)->srr0;
+      return ((ppc_thread_state_t*)regs)->__srr0;
     # elif defined(__i386__)
-      return ((struct i386_thread_state*)regs)->eip;
+      return ((i386_thread_state_t*)regs)->__eip;
     # else
       #error what arch?
     # endif

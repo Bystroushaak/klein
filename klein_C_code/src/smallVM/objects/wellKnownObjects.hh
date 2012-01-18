@@ -70,7 +70,7 @@ class The {
   static void    moved_some_objects();
   
   static void    initialize_for_vm(oop_t);
-  static void    set_from( ID, ID, char* );
+  static void    set_from( ID, ID, const char* );
   
   static void    set_active_context( oop_t o, MemObj* a) { wks[active_context].oop = o;  wks[active_context].addr = a; }
   

@@ -10,15 +10,15 @@ bool is_id_alpha( char c ) {
       ||   c == '_';
 }
 
-int length_of_C_string( char* s ) {
+int length_of_C_string(const char* s ) {
   int i = 0;
-  for ( char* c = s;  *c != '\0';  ++c)
+  for (const char* c = s;  *c != '\0';  ++c)
     ++i;
   return i;
 }
 
 
-int arg_count_of_string( char* s, int len )  {
+int arg_count_of_string(const char* s, int len )  {
   char c = *s;
 
   if ( !is_id_alpha(c) )        return 1;

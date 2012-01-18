@@ -80,9 +80,9 @@ const char* string_for_request_type(request_type_t t);
 
 void FlushCache(char* where, int len);
 
-char* build_errno_status(int e, char* why);
-void error_printf_and_flush( char* msg, ...);
-void printf_and_flush( char* msg, ...);
+char* build_errno_status(int e, const char* why __restrict);
+void error_printf_and_flush(const char* msg __restrict, ...);
+void printf_and_flush(const char* msg __restrict, ...);
 
 
 
@@ -96,7 +96,7 @@ class Socket {
   Socket(const Socket& s) { fd = s.fd; }
 
 
-  virtual void write_data(char* buf, int len, char* why) {
+  virtual void write_data(char* buf, int len, const char* why __restrict) {
     if (verbose) printf_and_flush("writing data: %d bytes\n", len);
     int nb = 0;
     for (int total = 0;  total < len;  total += nb) {
@@ -109,7 +109,7 @@ class Socket {
     if (verbose) printf_and_flush("write_data success: %s\n", why);
   }
 
-  virtual int read_data(char* buf, int min_len, int max_len, char* why) {
+  virtual int read_data(char* buf, int min_len, int max_len, const char* why __restrict) {
     int nb = 0;
     int total = 0;
     for (total = 0;  total < min_len;  total += nb,  buf += nb) {
@@ -127,7 +127,7 @@ class Socket {
     return total;
   }
    
-  void write_string(const char* the_string, char* why) {
+  void write_string(const char* the_string, const char* why __restrict) {
     int len = strlen(the_string);
 	write_int(len, why);
     write_data((char*)the_string, len, why);
@@ -135,7 +135,7 @@ class Socket {
   }
   
      
-  char* read_string(char* why) {
+  char* read_string(const char* why __restrict) {
     int len = read_int(why);
     char* buf = new char[len + 1];
     read_data(buf, len, len, why);
@@ -144,7 +144,7 @@ class Socket {
     return buf;
   }
    
-  char* read_bytes(int& len, char* why) {
+  char* read_bytes(int& len, const char* why __restrict) {
     len = read_int(why);
 	char* buf = new char[len];
     read_data(buf, len, len, why);
@@ -152,13 +152,13 @@ class Socket {
     return buf;
   }
    
-  void write_bytes(char* the_bytes, int len, char* why) {
+  void write_bytes(char* the_bytes, int len, const char* why __restrict) {
     write_int(len, why);
     write_data(the_bytes, len, why);
     if (verbose) printf_and_flush("write_bytes success: %s\n", why);
   }
    
-  void write_int(int i, char* why) {
+  void write_int(int i, const char* why __restrict) {
     char buf[4];
     buf[0] = char(i >> 24);
     buf[1] = char(i >> 16);
@@ -168,7 +168,7 @@ class Socket {
     if (verbose) printf_and_flush("write_int success: %s\n", why);
   }
 
-  int read_int(char* why) {
+  int read_int(const char* why __restrict) {
     char buf[4];
 	read_data(buf, sizeof(buf), sizeof(buf), why);
 	
@@ -177,10 +177,10 @@ class Socket {
     return r;
   }
    
-  void write_byte(char  b, char* why) { write_data(&b, 1, why); }
-  char  read_byte(         char* why) { char b;  read_data(&b, 1, 1, why);  return b; }
+  void write_byte(char  b, const char* why __restrict) { write_data(&b, 1, why); }
+  char  read_byte(         const char* why __restrict) { char b;  read_data(&b, 1, 1, why);  return b; }
    
-  void read_int_array(int*& int_array, int& length, char* why) {
+  void read_int_array(int*& int_array, int& length, const char* why __restrict) {
     int_array = NULL;  length = 0;
     length = read_int(why);
     int_array = new int[length];
@@ -188,14 +188,14 @@ class Socket {
       int_array[i] = read_int(why);
   }
   
-  void write_int_array(int* int_array, int length, char* why) {
+  void write_int_array(int* int_array, int length, const char* why __restrict) {
     write_int(length, why);
     for (int i = 0;  i < length;  ++i)
       write_int(int_array[i], why);
   }
 
    
-  void write_errno_status(int e, char* why) {
+  void write_errno_status(int e, const char* why __restrict) {
     char* status = build_errno_status(e, why);
     write_string(status, why);
     delete status; // Don't need "delete[]"; no recursive destruction -- dmu 8/05
@@ -230,7 +230,7 @@ class BufferedSocket: public Socket {
   BufferedSocket(const Socket& s) : Socket(s) {next_input = next_output = input_length = 0;}
 
 
-  void write_data(char* buf, int len, char* why) {
+  void write_data(char* buf, int len, const char* why __restrict) {
     if (verbose) printf_and_flush("BufferedSocket:write_data %d bytes\n", len);
     for (;;) {
       int this_time = min( sizeof(output_buffer) - next_output,  len );
@@ -246,7 +246,7 @@ class BufferedSocket: public Socket {
     }
   }
 
-  int read_data(char* buf, int min_len, int max_len, char* why) {
+  int read_data(char* buf, int min_len, int max_len, const char* why __restrict) {
     int total = 0;
     for ( ; min_len > 0; ) {
       input_why = why;
@@ -276,8 +276,8 @@ private:
   int   next_input;
   int   input_length;
   int   next_output;
-  char* input_why;
-  char* output_why;
+  const char* input_why;
+  const char* output_why;
 
   void read_input() {
     if (input_length == 0) {

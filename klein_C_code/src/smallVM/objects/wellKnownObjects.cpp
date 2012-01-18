@@ -15,7 +15,7 @@ void setBootstrapInfo(int oop, int addr) {
   Memory::safe_to_do_gc_now();
 }
 
-void The::set_from(ID dst, ID src, char* slotName) {
+void The::set_from(ID dst, ID src, const char* slotName) {
   // printf_and_flush("setting %s\n", slotName);
   set_oop_and_addr_of( dst, addr_of(src)->contents_of_slot_for_bootstrapping(slotName) );
 } 

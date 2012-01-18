@@ -164,7 +164,7 @@ class ClientSocketOpener {
 
   void connect_socket(int port) {
     struct sockaddr_in a;
-    a.sin_family = htons(AF_INET);
+    a.sin_family = AF_INET;
     a.sin_port = htons(port);
     long aLong;
     memcpy((char*)&aLong, host_entry->h_addr_list[0], sizeof(aLong));
@@ -210,7 +210,7 @@ public:
     close(serverSocketFd);
     if (verbose  ||  print_children)
       printf_and_flush("child returning %d\n", clientSocketFd);
-    setpgrp(0, getpid());
+    setpgid(0, getpid());
     return clientSocketFd;
  }
           
@@ -250,7 +250,7 @@ class ServerInitiator: public SocketUser {
  private:
 
   // For SPARC, was: static const char arch[] = "sparc";
-  char*  arch;
+  const char*  arch;
   char   error_or_null[1000];
 
   void set_arch() {
@@ -300,7 +300,7 @@ class ServerInitiator: public SocketUser {
     
     if (len != (int)strlen(initiation_request)) 
       sprintf(error_or_null, "Client Error: invalid initiation request length: "
-                              "should have been: %d, was %d",
+                              "should have been: %lu, was %d",
                               strlen(initiation_request), len);
 
     else if (strncmp(req, initiation_request, len) != 0)
@@ -438,7 +438,7 @@ public:
 };
 
 
-void error_printf_and_flush( char* msg, ...) {
+void error_printf_and_flush(const char* msg , ...) {
   // Darned child process printf_and_flush doesn't work without the flush. -- dmu, jp 12/03
   va_list ap;
   va_start(ap, msg);
@@ -450,7 +450,7 @@ void error_printf_and_flush( char* msg, ...) {
 }
 
 
-void printf_and_flush( char* msg, ...) {
+void printf_and_flush(const char* msg , ...) {
   // Darned child process printf_and_flush doesn't work without the flush. -- dmu, jp 12/03
   va_list ap;
   va_start(ap, msg);
@@ -514,7 +514,7 @@ void process_arguments(int argc, char *argv[], int& serverPort) {
 }
 
 
-char* build_errno_status(int e, char* why) {
+char* build_errno_status(int e, const char* why ) {
   if (e == 0) {
     char* empty = new char[1];
     empty[0] = '\0';

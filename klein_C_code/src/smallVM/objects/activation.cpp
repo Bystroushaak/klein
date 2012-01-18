@@ -74,7 +74,7 @@ oop_t ActivationObj::loop(oop_t this_activation) {
     if (bci >= codes_length) {
       oop_t r = pop();
       oop_t s = get_sender_quickly(io);
-      if (s != NULL) // it'll be NULL if we're returning from the start method
+      if ( s ) // it'll be NULL if we're returning from the start method
         ActivationObj::from(s)->remote_push(r);
       // todo optimize time slow; quits this routine just for a return -- dmu 1/06
       return s;

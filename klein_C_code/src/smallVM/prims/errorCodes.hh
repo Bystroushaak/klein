@@ -33,7 +33,7 @@ ENDMARKER
 class ErrorCodeEntry {
   public:
     error_t ID;
-    char* cString;
+    const char* cString;
     oop_t selfString; //init to -1, and cache?
   public:
     static oop_t getSelfString();

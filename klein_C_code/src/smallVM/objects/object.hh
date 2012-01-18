@@ -102,7 +102,7 @@ class MemObj {
   oop_t    contents_of_slot(oop_t name);
   void set_contents_of_slot(oop_t name, oop_t x);
 
-  oop_t    contents_of_slot_for_bootstrapping(char* name);
+  oop_t    contents_of_slot_for_bootstrapping(const char* name);
   
   bool is_byteVector()    { return read_mark_value() & mark_byteVector_bit;    }
   bool is_activationMap() { return read_mark_value() & mark_activationMap_bit; }

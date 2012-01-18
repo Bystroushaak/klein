@@ -20,7 +20,7 @@ Lookup::Result* Lookup::findSlotsIn( oop_t rcvr, oop_t selector, LookupType lt )
   return &lp.result;
 }
 
-void Lookup::selectorAndSourceForLookupError (Result::result_type rt, oop_t& sel, char*& source) {
+void Lookup::selectorAndSourceForLookupError (Result::result_type rt, oop_t& sel, const char*& source) {
  switch (rt) {
   case Result::foundNone: 
     sel = StringObj::intern( "undefinedSelector:Receiver:Type:Delegatee:MethodHolder:Arguments:");
@@ -102,7 +102,7 @@ fint Lookup::argCountForLookupError(oop_t selector, fint perform_arg_count, Look
 
 oop_t Lookup::lookupFailed(oop_t rcvr, oop_t sel, oop_t del, oop_t holder_of_sender_method, oop_t sender_act, LookupType lookupType, Result::result_type rt) {
   oop_t selForError;
-  char* sourceForError;
+  const char* sourceForError;
   selectorAndSourceForLookupError(rt, selForError, sourceForError);
 
   oop_t holder_of_error_method;

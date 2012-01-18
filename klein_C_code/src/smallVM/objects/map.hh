@@ -5,6 +5,8 @@
 # include "byteVector.hh"
 # include "objVector.hh"
 
+# include <cstddef>
+
 class SlotType {
  friend class LayoutConstantsGetter;
 
@@ -76,10 +78,11 @@ class SlotDesc {
   
  private:  
  friend class LayoutConstantsGetter;
-  static int           name_offset() { return (int)&((SlotDesc*)0)->_name / sizeof(oop_t); }
-  static int       type_oop_offset() { return (int)&((SlotDesc*)0)->type_oop / sizeof(oop_t); }
-  static int data_or_offset_offset() { return (int)&((SlotDesc*)0)->data_or_offset / sizeof(oop_t); }
-  static int     annotation_offset() { return (int)&((SlotDesc*)0)->annotation / sizeof(oop_t); }
+#define plainOffsetOf(s, m) ((size_t)((((char *)&(((s *)1)->m)) - 1)))
+  static int           name_offset() { return plainOffsetOf(SlotDesc,_name); }
+  static int       type_oop_offset() { return plainOffsetOf(SlotDesc,type_oop);  }
+  static int data_or_offset_offset() { return plainOffsetOf(SlotDesc,data_or_offset); }
+  static int     annotation_offset() { return plainOffsetOf(SlotDesc,annotation); }
 };
 
 
@@ -100,7 +103,7 @@ class MapObj : public ObjVectorObj {
   SlotDesc*   slotDesc_unchecked_at(fint i)    { return slotDesc_origin() + i; }
   SlotDesc*   slotDesc_at(fint i)              { return slotDesc_unchecked_at( assert_bounds(i, slotDesc_count()) ); }
   
-  SlotDesc*   find_slot_with_C_name(char*);
+  SlotDesc*   find_slot_with_C_name(const char*);
   SlotDesc*   find_slot(oop_t str);
   
   static MapObj* from(oop_t x) { return (MapObj*) ObjVectorObj::from(x); }

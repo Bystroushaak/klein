@@ -16,7 +16,7 @@ oop_t MemObj::contents_of_slot(oop_t n) {
 }
 
 
-oop_t MemObj::contents_of_slot_for_bootstrapping(char* n) {
+oop_t MemObj::contents_of_slot_for_bootstrapping(const char* n) {
   SlotDesc* sd = map_addr()->find_slot_with_C_name(n);
   assert(sd);
   return sd->contents(this);
@@ -142,7 +142,7 @@ void MemObj::debug_print(oop_t debugee) {
   fint t = tag(debugee);
   char s[MaxLen]; // = NEW_RESOURCE_ARRAY(char, MaxLen);
   if (t == smi_tag) {
-    sprintf(s, "a smi%ld", (value_of_smiOop(debugee)));
+    sprintf(s, "a smi%ld", (long)(value_of_smiOop(debugee)));
   } else if (t == mem_tag) {
     if      (debugee ==  The::oop_of (The::true_object))          sprintf(s, "true");
     else if (debugee ==  The::oop_of (The::false_object))         sprintf(s, "false");

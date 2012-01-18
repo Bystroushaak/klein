@@ -7,9 +7,9 @@
 inline smi hash_of_smi(smi i) { return i; }
 
 // must be kept in sync with klein virtualMachines abstractVM stringComparisonMixin hashElement:
-smi hash_of_string(char* str, smi size) {
+smi hash_of_string(const char* str, smi size) {
   smi h = size;
-  char *x = str, *end = str + size, *end_minus_three = end - 3;
+  const char *x = str, *end = str + size, *end_minus_three = end - 3;
   while (x <= end_minus_three) {
     h = h ^ hash_of_smi( *x++       )
           ^ hash_of_smi( *x++ <<  8 )
@@ -28,7 +28,7 @@ smi StringObj::hash_for_comparison() {
 
 
 // must be kept in sync with traits hashTableSetOrDictionary indexOf:IfPresent:IfAbsent:FirstRM:
-smi find_string_in_table_past_first_RM(char* str, smi str_size, smi firstRM, smi* indexp, ObjVectorObj* selfStrings, smi io, smi sz, oop_t emptyMarker, oop_t removedMarker) {
+smi find_string_in_table_past_first_RM(const char* str, smi str_size, smi firstRM, smi* indexp, ObjVectorObj* selfStrings, smi io, smi sz, oop_t emptyMarker, oop_t removedMarker) {
   bool firstWrap = true;
   smi i = firstRM + 1;
   
@@ -62,7 +62,7 @@ smi find_string_in_table_past_first_RM(char* str, smi str_size, smi firstRM, smi
 
 
 // must be kept in sync with traits hashTableSetOrDictionary unsafe_indexOf:IfPresent:IfAbsent:
-bool find_string_in_table(char* str, smi str_size, smi* indexp) {
+bool find_string_in_table(const char* str, smi str_size, smi* indexp) {
   ObjVectorObj* selfStrings = (ObjVectorObj*) The::addr_of(The::canonicalizedStringVector);
   smi io   =  selfStrings->indexableOrigin();
   smi sz   =  selfStrings->indexableSize();
@@ -97,7 +97,7 @@ bool find_string_in_table(char* str, smi str_size, smi* indexp) {
 
 
 
-oop_t StringObj::slow_intern(char* cString) {
+oop_t StringObj::slow_intern(const char* cString) {
   ObjVectorObj* selfStrings = (ObjVectorObj*) The::addr_of(The::canonicalizedStringVector);
   smi i =      selfStrings->indexableOrigin();
   smi n =  i + selfStrings->indexableSize();
@@ -113,7 +113,7 @@ oop_t StringObj::slow_intern(char* cString) {
 }
 
 
-oop_t StringObj::intern(char* cString, fint length) {
+oop_t StringObj::intern(const char* cString, fint length) {
   ObjVectorObj* selfStrings = (ObjVectorObj*) The::addr_of(The::canonicalizedStringVector);
   smi io =      selfStrings->indexableOrigin();
   

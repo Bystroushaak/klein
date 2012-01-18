@@ -26,7 +26,7 @@ class Lookup {
 
     void add_slot(oop_t, SlotDesc*);
     void print() { printf("%s\n", result_type_string()); }
-    char* result_type_string() {
+    const char* result_type_string() {
       switch(rt) {
        case foundNone: return "foundNone";
        case foundOne:  return "foundOne";
@@ -51,7 +51,7 @@ private:
 
   static Result* findSlotsIn( oop_t rcvr, oop_t selector, LookupType lt );
 
-  static void selectorAndSourceForLookupError (Result::result_type rt, oop_t& sel, char*& source); // UNTESTED
+  static void selectorAndSourceForLookupError (Result::result_type rt, oop_t& sel, const char*& source); // UNTESTED
   static oop_t messageTypeForLookupError(LookupType lookupType); // UNTESTED
   static fint argCountForLookupError(oop_t selector, fint perform_arg_count, LookupType lookupType); // UNTESTED
   static oop_t lookupFailed(oop_t rcvr, oop_t sel, oop_t del, oop_t holder_of_sender_method, oop_t sender_act, LookupType lookupType, Result::result_type rt); // UNTESTED

@@ -7,6 +7,7 @@
 # include "memory.hh"
 # include <alloca.h>
 # include <unistd.h>
+# include <signal.h>
 
 const char* Primitives::          failure_suffix = "IfFail:";
 const int   Primitives::length_of_failure_suffix = 7;
@@ -819,7 +820,7 @@ oop_t Primitives::invoke( oop_t sel, oop_t rcvr, oop_t* argsp, smi arg_count, oo
   if (result == badOop) // the primitive wants to call a method; for now, only the _Perform: primitives do this
     return result;
   
-  oop_t rcvr_for_fail = (rcvr == NULL || rcvr == badOop) ? The::oop_of(The::lobby) : rcvr;
+  oop_t rcvr_for_fail = ( !rcvr || rcvr == badOop) ? The::oop_of(The::lobby) : rcvr;
 
   return primitive_fail ( sel,
                           rcvr_for_fail,
