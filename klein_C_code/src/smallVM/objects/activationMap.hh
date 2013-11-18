@@ -39,4 +39,4 @@ class ActivationMapObj : public MapObj {
 };
 
 
-# endif ACTIVATION_MAP_HH
+# endif // ACTIVATION_MAP_HH

@@ -28,4 +28,4 @@ void       printf_and_flush(const char* , ...);
 
                  
  
-# endif ASSERTS_HH
+# endif // ASSERTS_HH

@@ -1,6 +1,8 @@
 // This file is only for Linux (the Mercury board)
 // $Revision: 1.1 $
 
+# ifndef LINUX_DEBUG_SERVER_HH
+# define LINUX_DEBUG_SERVER_HH
 
 # include <inttypes.h>
 # include <stdio.h>
@@ -154,7 +156,9 @@ class ProcessStatus {
       // there might be conversion errors.  Right now we really don't care.
       // go ahead and clobber errno and everything will be happy. -- Michael Furman 8/05
       errno=0;
-      delete tbuf;`:w
+      // delete tbuf;`:w
+      // is that vim?
+      delete tbuf;
     }
 
 
@@ -612,3 +616,5 @@ class LinuxRequestServer: public SocketUser {
       return r;
     }
 };
+
+# endif // LINUX_DEBUG_SERVER_HH

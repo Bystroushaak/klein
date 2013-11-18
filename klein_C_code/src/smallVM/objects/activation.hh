@@ -110,4 +110,4 @@ class ActivationObj : public ObjVectorObj {
 
 static oop_t home_frame(oop_t rcvr);
 
-# endif ACTIVATION_HH
+# endif // ACTIVATION_HH
